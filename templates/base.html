@@ -12,35 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <!-- Theme-wechsel Management -->
-    <script>
-        // Theme-Einstellung aus dem localStorage laden
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-bs-theme', savedTheme);
-                updateThemeIcon(savedTheme);
-            }
-        });
-        
-        // Theme umschalten
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-bs-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-        }
-        
-        // Icon aktualisieren
-        function updateThemeIcon(theme) {
-            const themeIcon = document.getElementById('theme-icon');
-            if (themeIcon) {
-                themeIcon.className = theme === 'dark' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
-            }
-        }
-    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -56,16 +27,6 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ url_for('index') }}">Startseite</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('cloudflare_export') }}">
-                            <i class="bi bi-cloud-arrow-down-fill me-1"></i>Cloudflare Export
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn nav-link" onclick="toggleTheme()" title="Theme wechseln">
-                            <i id="theme-icon" class="bi bi-moon-fill"></i>
-                        </button>
                     </li>
                 </ul>
             </div>
