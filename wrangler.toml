@@ -1,0 +1,9 @@
+name = "youtube-downloader"
+main = "main.py"
+compatibility_date = "2025-03-20"
+
+[vars]
+# Setzen Sie Umgebungsvariablen in der Datei .env oder in der Cloudflare-Konsole
+
+[env.production]
+workers_dev = true

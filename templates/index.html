@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-lg border-0 mb-4">
+            <div class="card-body p-4">
+                <h1 class="text-center mb-4">YouTube Videos herunterladen</h1>
+                <p class="text-center text-muted mb-4">Geben Sie eine YouTube-URL ein, um Videos herunterzuladen oder Audio zu extrahieren.</p>
+                
+                <!-- URL Input Form -->
+                <form id="url-form" class="mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark">
+                            <i class="fab fa-youtube text-danger"></i>
+                        </span>
+                        <input type="url" id="youtube-url" class="form-control form-control-lg" 
+                               placeholder="YouTube-URL hier einfügen..." required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search me-1"></i> Video abrufen
+                        </button>
+                    </div>
+                    <div class="invalid-feedback">
+                        Bitte geben Sie eine gültige YouTube-URL ein.
+                    </div>
+                </form>
+                
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" class="text-center py-4" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Lädt...</span>
+                    </div>
+                    <p class="mt-2">Video-Informationen werden abgerufen...</p>
+                </div>
+                
+                <!-- Error Message -->
+                <div id="error-container" class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="error-message">Fehlermeldung erscheint hier</span>
+                    <button type="button" id="close-error" class="btn-close" aria-label="Close"></button>
+                </div>
+                
+                <!-- Video Preview -->
+                <div id="preview-container" class="mt-4" style="display: none;">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-0">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="thumbnail-container h-100">
+                                        <img id="video-thumbnail" src="" alt="Video-Vorschaubild" class="img-fluid h-100 w-100 object-fit-cover">
+                                        <div class="duration-badge">
+                                            <i class="fas fa-clock me-1"></i>
+                                            <span id="video-duration">00:00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h4 id="video-title" class="card-title mb-2">Video Title</h4>
+                                        <span id="playlist-badge" class="badge bg-primary mb-2" style="display: none;">Playlist</span>
+                                        <div class="d-flex flex-wrap mt-2 align-items-center preview-meta">
+                                            <div class="me-3 mb-2">
+                                                <i class="fas fa-user text-secondary me-1"></i>
+                                                <span id="video-uploader" class="text-muted">Channel Name</span>
+                                            </div>
+                                            <div class="me-3 mb-2">
+                                                <i class="fas fa-calendar-alt text-secondary me-1"></i>
+                                                <span id="video-date" class="text-muted">Upload Date</span>
+                                            </div>
+                                        </div>
+                                        <hr class="my-3">
+                                        <p class="mb-0">Wählen Sie Ihr bevorzugtes Format unten aus:</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Format Options -->
+                <div id="format-container" class="mt-4" style="display: none;"></div>
+                
+                <!-- Download Form (hidden initially) -->
+                <form id="download-form" style="display: none;"></form>
+                
+                <!-- Progress Bar -->
+                <div id="progress-container" class="mt-4" style="display: none;">
+                    <h4 class="mb-3">Wird heruntergeladen...</h4>
+                    <!-- Playlist/Video-Specific Progress Status -->
+                    <div id="progress-status" class="mb-2"></div>
+                    <div class="progress" style="height: 25px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                             role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" 
+                             style="width: 0%">0%</div>
+                    </div>
+                    <p class="text-muted mt-2">
+                        <small><i class="fas fa-info-circle me-1"></i> Bitte warten Sie, während wir Ihren Download vorbereiten. Dies kann bei großen Dateien eine Weile dauern.</small>
+                    </p>
+                </div>
+                
+                <!-- Download Link -->
+                <div id="download-container" class="mt-4 text-center" style="display: none;">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Ihr Download ist bereit!
+                    </div>
+                    <a id="download-link" href="#" class="btn btn-lg btn-success">
+                        <i class="fas fa-download me-2"></i> Datei herunterladen
+                    </a>
+                    <p class="text-muted mt-3">
+                        <small><i class="fas fa-exclamation-circle me-1"></i> Der Download-Link läuft nach Abschluss des Downloads ab.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <div class="card shadow border-0">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Anleitung zur Verwendung</h4>
+                <ol>
+                    <li>Kopieren Sie die YouTube-Video- oder Playlist-URL aus der Adressleiste Ihres Browsers.</li>
+                    <li>Fügen Sie die URL in das Eingabefeld oben ein und klicken Sie auf "Video abrufen".</li>
+                    <li>Wählen Sie Ihr bevorzugtes Format (Videoqualität oder Audio).</li>
+                    <li>Klicken Sie auf die Schaltfläche "Ausgewähltes Format herunterladen" und warten Sie, bis der Vorgang abgeschlossen ist.</li>
+                    <li>Klicken Sie auf den Download-Link, wenn er erscheint, um die Datei auf Ihrem Gerät zu speichern.</li>
+                </ol>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Hinweis:</strong> Diese Anwendung ist nur für den persönlichen Gebrauch bestimmt. Bitte respektieren Sie Urheberrechtsgesetze und die Nutzungsbedingungen von YouTube.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Custom JavaScript for this page can go here -->
+{% endblock %}

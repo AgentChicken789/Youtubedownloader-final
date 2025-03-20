@@ -1,0 +1,129 @@
+/* Custom styles to complement Bootstrap */
+
+/* Theme transition für flüssigen Theme-Wechsel */
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Format cards styling */
+.format-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--bs-info);
+}
+.video-preview {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    max-width: 100%;
+}
+
+.preview-container {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+.format-option {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 100%;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.format-option:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.format-option.selected {
+    border-color: var(--bs-info) !important;
+    box-shadow: 0 0 0 2px rgba(var(--bs-info-rgb), 0.5);
+    background-color: rgba(var(--bs-info-rgb), 0.1);
+}
+
+.progress-container {
+    display: none;
+    margin-top: 20px;
+}
+
+.download-container {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.thumbnail-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.thumbnail-container img {
+    transition: all 0.3s ease;
+}
+
+.thumbnail-container:hover img {
+    transform: scale(1.05);
+}
+
+.duration-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading {
+    animation: pulse 1.5s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .preview-meta {
+        flex-direction: column;
+    }
+    .format-container {
+        flex-direction: column;
+    }
+}
